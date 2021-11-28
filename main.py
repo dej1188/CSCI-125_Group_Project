@@ -277,15 +277,19 @@ def show_about():
     about_text["state"] = "disabled"
     about_text.grid(row=1, column=0)
 
-def show_help():
-    path = exec_dir / "help.txt"
+def show_help(): #program that opens help txt
+    header= ""
+    body= ""
     try:
+        #opens help text
+        path = exec_dir / "help.txt"
         with path.open() as file:
             header = next(file)
             body = "".join(file)
     except FileNotFoundError:
-        tk.messagebox.showerror("File Not Found", f'File "{path}" not found.\nThis file is important.')
-        return
+        print ("File not found!")
+    except OSError:
+        print ("File correupted!")
     
     help_window = tk.Toplevel(master=mainWindow)
     help_window.title("About")
