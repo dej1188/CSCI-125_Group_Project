@@ -232,10 +232,16 @@ def insert_data(data):
 #FILE IO SECTION
 #Expectation: When clicked, open file will open a filedialog and then pass the path of the file to insert_data
 def open_file():
-    global filePath #Imports the global filepath variable for use locally
-    filePath = filedialog.askopenfilename() #opens a dialog to browse for file, assigning it to the file path.
-    with open(filePath, "r") as file: #open the file
-        data = file.read() #read data into variable
+    try:
+        #opens file
+        global filePath #Imports the global filepath variable for use locally
+        filePath = filedialog.askopenfilename() #opens a dialog to browse for file, assigning it to the file path.
+        with open(filePath, "r") as file: #open the file
+    except FileNotFoundError:
+        print("File not found!")
+    except OSError:
+        print("File corrupted!")
+    data = file.read() #read data into variable
     # Modified by Deon
     insert_data(data) #Justin's function to put the data into the text frame
 
